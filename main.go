@@ -45,8 +45,18 @@ func init() {
 }
 
 func main() {
+	// 启动服务
 	router := gin.Default()
+	// 中间件，路由守卫
+	router.Use(func(ctx *gin.Context) {
 
+	})
+	// 路由分组
+	appRouter := router.Group("/app")
+	// 路由处理函数
+	appRouter.GET("/hello", func(ctx *gin.Context) {
+
+	})
 	router.Run(":80")
 }
 
