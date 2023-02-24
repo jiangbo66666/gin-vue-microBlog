@@ -15,5 +15,7 @@ type DataBase struct {
 	Port     string `ymal:"port"`
 	UserName string `ymal:"userName"`
 	PassWord string `ymal:"passWord"`
-	TimeOut  uint   `ymal:"timeOut"`
+	TimeOut  int    `ymal:"timeOut"`
+	MaxConn  int
+	MaxOpen  int
 }

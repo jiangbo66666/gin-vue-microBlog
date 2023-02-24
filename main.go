@@ -2,6 +2,7 @@ package main
 
 // import本项目的其他文件的包的时候，需要以项目名/包名的方式引用，并且go.mod文件的最上面需要声明本项目的module 如：module gin-vue-microBlog
 import (
+	"encoding/json"
 	"fmt"
 	"gin-vue-microBlog/conf"
 
@@ -14,6 +15,7 @@ import (
 var DB *gorm.DB
 
 func init() {
+	// 读取ymal配置文件
 	configInfo := readConfig()
 	dataBaseInfo := configInfo.DataBase
 	// 连接数据库
@@ -27,9 +29,18 @@ func init() {
 	DB, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic("errrrr")
-	} else {
-		fmt.Print(DB)
 	}
+	sqlDb, _ := DB.DB()
+	// 关闭数据库链接
+	defer sqlDb.Close()
+	fmt.Println(dataBaseInfo.MaxConn)
+	fmt.Println(dataBaseInfo.MaxOpen)
+	sqlDb.SetMaxIdleConns(dataBaseInfo.MaxConn) //设置最大连接数
+	sqlDb.SetMaxOpenConns(dataBaseInfo.MaxOpen) //设置最大的空闲连接数
+	// sqlDb.Stats()
+	data, err := json.Marshal(sqlDb.Stats()) //获得当前的SQL配置情况
+	// 打印配置情况
+	fmt.Println(string(data))
 
 }
 
@@ -40,6 +51,7 @@ func main() {
 }
 
 func readConfig() *conf.Config {
+	// 使用ymal文件做读取操作
 	viper.SetConfigType("yaml")
 	viper.SetConfigFile("./conf/config.yaml")
 	//读取配置文件
