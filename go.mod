@@ -1,4 +1,5 @@
 module gin-vue-microBlog
+// 导入当前文件的module 便于直接访问当前目录下的文件
 
 go 1.19
 
