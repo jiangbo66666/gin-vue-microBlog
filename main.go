@@ -4,7 +4,7 @@ package main
 import (
 	"gin-vue-microBlog/routers"
 
-	"gin-vue-microBlog/conf"
+	"gin-vue-microBlog/models"
 
 	"gorm.io/gorm"
 )
@@ -12,12 +12,12 @@ import (
 var DB *gorm.DB
 
 func init() {
-	// 初始化db设置
-	conf.InitDb()
+	// 初始化数据库设置
+	models.InitDb()
 }
 
 func main() {
 	// 初始化路由
 	r := routers.InitRouter()
-	r.Run("80")
+	r.Run(":8081")
 }
