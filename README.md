@@ -1,5 +1,5 @@
 # gin-vue-microBlog
-基于gin创建的microBlog项目
+基于gin创建的microBlog项目，项目需要数据库的支持，暂不可直接运行（仅作为目录结构展示）
 ## 目录结构
 
 controller层 - routers文件夹，主要执行与前端的api的映射，调用service层的方法
