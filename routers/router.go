@@ -32,7 +32,7 @@ func InitRouter() *gin.Engine {
 	// 使用jwt
 	// user.Use(jwt.JWT())
 	{
-		user.GET("/info", api.UserDetail)
+		user.POST("/info", api.UserDetail)
 	}
 
 	return r

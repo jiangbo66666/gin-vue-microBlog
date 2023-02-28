@@ -5,6 +5,6 @@ DataBase:
  passWord: imm62611
  user: gorm
  timeOut: 1000
- MaxConn: 200
- MaxOpen: 200
+ MaxConn: 20
+ MaxOpen: 20
 # dsn := "root:imm62611@tcp(127.0.0.1:3306)/gorm?charset=utf8mb4&parseTime=True&loc=Local"
