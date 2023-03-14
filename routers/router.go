@@ -18,7 +18,9 @@ import (
 func InitRouter() *gin.Engine {
 	// 初始化路由
 	r := gin.New()
+	// log日志
 	r.Use(gin.Logger())
+	//
 	r.Use(gin.Recovery())
 
 	// 静态文件读取

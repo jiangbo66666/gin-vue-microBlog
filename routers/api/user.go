@@ -3,14 +3,14 @@ package api
 import (
 	"encoding/json"
 	"fmt"
-	"gin-vue-microBlog/service/user_service"
+	"gin-vue-microBlog/service/account_service"
 
 	"github.com/gin-gonic/gin"
 )
 
 func UserDetail(ctx *gin.Context) {
 	// 简单的路由，承接数据并且发送出去
-	var userInfo user_service.User
+	var userInfo account_service.Account
 	bindJson(ctx, &userInfo)
 	data, err := userInfo.GetAccountInfoByPhone()
 	if err != nil {
