@@ -12,7 +12,7 @@ func UserDetail(ctx *gin.Context) {
 	// 简单的路由，承接数据并且发送出去
 	var userInfo user_service.User
 	bindJson(ctx, &userInfo)
-	data, err := userInfo.GetUserInfoById()
+	data, err := userInfo.GetAccountInfoByPhone()
 	if err != nil {
 		ctx.JSON(200, gin.H{
 			"code": 500,
