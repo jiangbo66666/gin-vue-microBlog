@@ -3,7 +3,7 @@ DataBase:
  port: 3306
  userName: root
  passWord: imm62611
- user: gorm
+ user: microblog
  timeOut: 1000
  MaxConn: 20
  MaxOpen: 20

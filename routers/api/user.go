@@ -28,7 +28,7 @@ func UserDetail(ctx *gin.Context) {
 	}
 }
 
-// 根据响应的数据
+// 响应数据合并到结构体
 func bindJson(c *gin.Context, struc any) (err error) {
 	body, _ := c.GetRawData()
 	contentType := c.GetHeader("Content-Type")

@@ -48,12 +48,35 @@ func InitDb() {
 	// DB的赋值要注意是全局变量还是局部变量
 	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
-		panic("errrrr")
+		// return errors.New("出错啦")
 	}
+	// 同步用户信息，账号信息表
+	DB.AutoMigrate(AccountInfo{})
+	// 创建首位用户的操作
+	// myAcc := AccountInfo{}
+	// myAcc.PhoneNumber = "17552314314"
+	// myAcc.AccountName = "bogegeya"
+	// myAcc.Password = "imm62611"
+	// myAcc.CreateAt = time.Now()
+	// myAcc.UpdateAt = time.Now()
+	// myAcc.RecentLogin = time.Now()
+	// myAcc.User = UserInfo{
+	// 	Name:        "波哥哥呀",
+	// 	Sex:         "男",
+	// 	BirthDay:    time.Date(1996, 8, 29, 0, 0, 0, 0, time.Local),
+	// 	PhoneNumber: "17552314314",
+	// 	Email:       "jiangbo1996@outlook.com",
+	// 	Address:     "江苏省无锡市梁溪区",
+	// 	CreateBy:    1,
+	// 	UpdateAt:    time.Now(),
+	// 	RecentLogin: time.Now(),
+	// 	Profile:     "世界上最帅的男人",
+	// }
+	// 创建用户
+	// DB.Create(&myAcc)
+
 	// defer DB.Close()
 	sqlDb, _ := DB.DB()
-	// 关闭数据库链接
-	// defer sqlDb.Close()
 	sqlDb.SetMaxIdleConns(dataBaseInfo.MaxConn) //设置最大连接数
 	sqlDb.SetMaxOpenConns(dataBaseInfo.MaxOpen) //设置最大的空闲连接数
 	sqlDb.Stats()
