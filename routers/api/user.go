@@ -11,8 +11,9 @@ import (
 func UserDetail(ctx *gin.Context) {
 	// 简单的路由，承接数据并且发送出去
 	var userInfo account_service.Account
-	bindJson(ctx, &userInfo)
-	data, err := userInfo.GetAccountInfoByPhone()
+	userInfo.Name = ctx.MustGet("AccountName").(string)
+	data, err := userInfo.GetAccountInfoByName()
+
 	if err != nil {
 		ctx.JSON(200, gin.H{
 			"code": 500,
@@ -24,6 +25,24 @@ func UserDetail(ctx *gin.Context) {
 			"code": 200,
 			"msg":  "ok",
 			"data": data,
+		})
+	}
+}
+
+func LoginByName(c *gin.Context) {
+	var loginInfo account_service.LoginInfo
+	bindJson(c, &loginInfo)
+	logined, token, err := loginInfo.CheckLoginByNameAndToken()
+	if logined && (err == nil) {
+		c.JSON(200, gin.H{
+			"code": 200,
+			"data": gin.H{"token": token},
+			"msg":  "登陆成功",
+		})
+	} else {
+		c.JSON(200, gin.H{
+			"code": 500,
+			"msg":  "登陆失败",
 		})
 	}
 }

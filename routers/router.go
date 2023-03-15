@@ -10,6 +10,7 @@ package routers
 
 import (
 	"gin-vue-microBlog/routers/api"
+	"gin-vue-microBlog/util"
 
 	"github.com/gin-gonic/gin"
 )
@@ -29,11 +30,32 @@ func InitRouter() *gin.Engine {
 	r.Use(func(ctx *gin.Context) {
 
 	})
+
+	r.POST("/login", api.LoginByName)
+
 	// 路由分组,读取userdetail handler
 	user := r.Group("/api/user")
 	// 使用jwt
 	// user.Use(jwt.JWT())
 	{
+		user.Use(func(ctx *gin.Context) {
+			token := ctx.GetHeader("Token")
+			//校验账号信息
+			AccountName, err := util.VarifyToken(token)
+			if err != nil {
+				ctx.JSON(200, gin.H{
+					"code": 501,
+					"msg":  "登录失效",
+				})
+
+				ctx.Abort()
+				return
+			} else {
+				// 将token中的账号信息存储起来
+				ctx.Set("AccountName", AccountName)
+				ctx.Next()
+			}
+		})
 		user.POST("/info", api.UserDetail)
 	}
 
