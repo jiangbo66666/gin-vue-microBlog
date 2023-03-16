@@ -1,6 +1,7 @@
 package account_service
 
 import (
+	"errors"
 	"gin-vue-microBlog/models"
 	"gin-vue-microBlog/util"
 )
@@ -36,20 +37,20 @@ func (user *Account) GetAccountInfoByPhone() (models.AccountInfoJson, error) {
 	return models.AccountInfoByPhone(user.PhoneNumber)
 }
 
-func (login *LoginInfo) CheckLoginByNameAndToken() (bool, string, error) {
+func (login *LoginInfo) LoginByNameAndToken() (string, error) {
 	userInfo, err := models.AccountInfoByName(login.AccountName)
 	if err != nil {
-		return false, "", err
+		return "", err
 	}
 	// 根据账号名称生成token
 	token, err := util.GenerateToken(userInfo.AccountName)
 	if err != nil {
-		return false, "", err
+		return "", err
 	}
 	if util.PasswordVerify(login.PassWord, userInfo.Password) {
-		return true, token, nil
+		return token, nil
 	} else {
-		return false, "", nil
+		return "", errors.New("密码错误")
 	}
 
 }

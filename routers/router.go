@@ -51,7 +51,7 @@ func InitRouter() *gin.Engine {
 				ctx.Abort()
 				return
 			} else {
-				// 将token中的账号信息存储起来
+				// token校验通过，将token中的账号信息存储起来
 				ctx.Set("AccountName", AccountName)
 				ctx.Next()
 			}

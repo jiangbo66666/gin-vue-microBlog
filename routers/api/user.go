@@ -29,11 +29,12 @@ func UserDetail(ctx *gin.Context) {
 	}
 }
 
+// 账号名登录路由函数
 func LoginByName(c *gin.Context) {
 	var loginInfo account_service.LoginInfo
 	bindJson(c, &loginInfo)
-	logined, token, err := loginInfo.CheckLoginByNameAndToken()
-	if logined && (err == nil) {
+	token, err := loginInfo.LoginByNameAndToken()
+	if err == nil {
 		c.JSON(200, gin.H{
 			"code": 200,
 			"data": gin.H{"token": token},
