@@ -54,25 +54,25 @@ func InitDb() {
 	DB.AutoMigrate(AccountInfo{})
 	// 创建首位用户的操作
 	// myAcc := AccountInfo{}
-	// myAcc.PhoneNumber = "17552314314"
-	// myAcc.AccountName = "bogegeya"
+	// myAcc.PhoneNumber = "17552314313"
+	// myAcc.AccountName = "bojiejieya"
 	// myAcc.Password = "imm62611"
 	// myAcc.CreateAt = time.Now()
 	// myAcc.UpdateAt = time.Now()
 	// myAcc.RecentLogin = time.Now()
 	// myAcc.User = UserInfo{
-	// 	Name:        "波哥哥呀",
-	// 	Sex:         "男",
+	// 	Name:        "波姐姐呀",
+	// 	Sex:         "女",
 	// 	BirthDay:    time.Date(1996, 8, 29, 0, 0, 0, 0, time.Local),
-	// 	PhoneNumber: "17552314314",
+	// 	PhoneNumber: "17552314313",
 	// 	Email:       "jiangbo1996@outlook.com",
 	// 	Address:     "江苏省无锡市梁溪区",
 	// 	CreateBy:    1,
 	// 	UpdateAt:    time.Now(),
 	// 	RecentLogin: time.Now(),
-	// 	Profile:     "世界上最帅的男人",
+	// 	Profile:     "世界上最美的女人",
 	// }
-	// 创建用户
+	// // 创建用户
 	// DB.Create(&myAcc)
 
 	// defer DB.Close()
