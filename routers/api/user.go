@@ -4,15 +4,16 @@ import (
 	"encoding/json"
 	"fmt"
 	"gin-vue-microBlog/service/account_service"
+	"gin-vue-microBlog/service/account_service/dto"
 
 	"github.com/gin-gonic/gin"
 )
 
 func UserDetail(ctx *gin.Context) {
 	// 简单的路由，承接数据并且发送出去
-	var userInfo account_service.Account
+	var userInfo dto.Account
 	userInfo.Name = ctx.MustGet("AccountName").(string)
-	data, err := userInfo.GetAccountInfoByName()
+	data, err := account_service.GetUserDetails(&userInfo)
 
 	if err != nil {
 		ctx.JSON(200, gin.H{
@@ -31,9 +32,9 @@ func UserDetail(ctx *gin.Context) {
 
 // 账号名登录路由函数
 func LoginByName(c *gin.Context) {
-	var loginInfo account_service.LoginInfo
+	var loginInfo dto.LoginInfo
 	bindJson(c, &loginInfo)
-	token, err := loginInfo.LoginByNameAndToken()
+	token, err := account_service.LoginByNameAndToken(&loginInfo)
 	if err == nil {
 		c.JSON(200, gin.H{
 			"code": 200,
