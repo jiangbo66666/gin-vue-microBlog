@@ -1,9 +1,9 @@
-package account_service
+package service
 
 import (
 	"errors"
 	"gin-vue-microBlog/models"
-	"gin-vue-microBlog/service/account_service/dto"
+	"gin-vue-microBlog/service/dto"
 	"gin-vue-microBlog/util"
 )
 

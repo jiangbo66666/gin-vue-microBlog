@@ -3,8 +3,8 @@ package api
 import (
 	"encoding/json"
 	"fmt"
-	"gin-vue-microBlog/service/account_service"
-	"gin-vue-microBlog/service/account_service/dto"
+	"gin-vue-microBlog/service"
+	"gin-vue-microBlog/service/dto"
 
 	"github.com/gin-gonic/gin"
 )
@@ -13,7 +13,7 @@ func UserDetail(ctx *gin.Context) {
 	// 简单的路由，承接数据并且发送出去
 	var userInfo dto.Account
 	userInfo.AccountName = ctx.MustGet("AccountName").(string)
-	data, err := account_service.GetUserDetails(&userInfo)
+	data, err := service.GetUserDetails(&userInfo)
 
 	if err != nil {
 		ctx.JSON(200, gin.H{
@@ -34,7 +34,7 @@ func UserDetail(ctx *gin.Context) {
 func LoginByName(c *gin.Context) {
 	var loginInfo dto.Account
 	bindJson(c, &loginInfo)
-	token, err := account_service.LoginByNameAndToken(&loginInfo)
+	token, err := service.LoginByNameAndToken(&loginInfo)
 	if err == nil {
 		c.JSON(200, gin.H{
 			"code": 200,
