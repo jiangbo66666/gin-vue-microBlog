@@ -12,7 +12,7 @@ import (
 func UserDetail(ctx *gin.Context) {
 	// 简单的路由，承接数据并且发送出去
 	var userInfo dto.Account
-	userInfo.Name = ctx.MustGet("AccountName").(string)
+	userInfo.AccountName = ctx.MustGet("AccountName").(string)
 	data, err := account_service.GetUserDetails(&userInfo)
 
 	if err != nil {
@@ -32,7 +32,7 @@ func UserDetail(ctx *gin.Context) {
 
 // 账号名登录路由函数
 func LoginByName(c *gin.Context) {
-	var loginInfo dto.LoginInfo
+	var loginInfo dto.Account
 	bindJson(c, &loginInfo)
 	token, err := account_service.LoginByNameAndToken(&loginInfo)
 	if err == nil {

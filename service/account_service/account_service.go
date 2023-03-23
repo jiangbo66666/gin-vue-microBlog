@@ -17,7 +17,7 @@ func GetAccountInfoById(user *dto.Account) (interface{}, error) {
 // 根据账号名称查找用户信息
 func GetUserDetails(user *dto.Account) (interface{}, error) {
 	// 数据处理层，拿到sql的数据进行处理
-	userDetail, err := models.AccountInfoByName(user.Name)
+	userDetail, err := models.AccountInfoByName(user.AccountName)
 	data := dto.UserDetails{
 		AccountName: userDetail.AccountName,
 		PhoneNumber: userDetail.PhoneNumber,
@@ -32,7 +32,7 @@ func GetAccountInfoByPhone(user *dto.Account) (interface{}, error) {
 	return models.AccountInfoByPhone(user.PhoneNumber)
 }
 
-func LoginByNameAndToken(login *dto.LoginInfo) (string, error) {
+func LoginByNameAndToken(login *dto.Account) (string, error) {
 	userInfo, err := models.AccountInfoByName(login.AccountName)
 	if err != nil {
 		return "", err

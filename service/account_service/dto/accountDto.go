@@ -7,10 +7,6 @@ type Account struct {
 	Id          int
 	Name        string `json:"name"`
 	PhoneNumber string `json:"phone"`
-}
-
-type LoginInfo struct {
-	PhoneNumber string `json:"phone"`
 	AccountName string `json:"accountName"`
 	PassWord    string `json:"passWord"`
 }
