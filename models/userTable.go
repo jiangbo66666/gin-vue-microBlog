@@ -28,6 +28,7 @@ type UserInfo struct {
 	Profile     string    `gorm:"comment:'个人简介'"`
 }
 
+// 唯一索引需要设置为not null null在数据库中是不被认为重复的。
 type AccountInfo struct {
 	ID          uint      `gorm:"primaryKey;autoIncrement;comment:'账号id'"` //id主键，自增
 	UserId      uint      `gorm:"comment:'用户id'"`
