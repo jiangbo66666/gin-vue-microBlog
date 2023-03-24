@@ -10,6 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// 注册账号路由函数
 func RegisterAccount(ctx *gin.Context) {
 	var registerInfo dto.Register
 	err := bindJson(ctx, &registerInfo)
@@ -19,6 +20,7 @@ func RegisterAccount(ctx *gin.Context) {
 			Code: 500,
 		})
 		return
+		// 校验账号名和密码是否都输入了
 	} else if registerInfo.AccountName != "" && registerInfo.Password != "" {
 		registerInfo.Password, err = util.PasswordHash(registerInfo.Password)
 		if err != nil {
@@ -28,7 +30,6 @@ func RegisterAccount(ctx *gin.Context) {
 			})
 			return
 		}
-		fmt.Println(registerInfo.AccountName)
 		id, err := service.RegisterByAccountName(&registerInfo)
 		if err != nil {
 			ctx.JSON(200, Response{
