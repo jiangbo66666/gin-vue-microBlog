@@ -5,9 +5,52 @@ import (
 	"fmt"
 	"gin-vue-microBlog/service"
 	"gin-vue-microBlog/service/dto"
+	"gin-vue-microBlog/util"
 
 	"github.com/gin-gonic/gin"
 )
+
+func RegisterAccount(ctx *gin.Context) {
+	var registerInfo dto.Register
+	err := bindJson(ctx, &registerInfo)
+	if err != nil {
+		ctx.JSON(200, Response{
+			Msg:  "信息不完整",
+			Code: 500,
+		})
+		return
+	} else if registerInfo.AccountName != "" && registerInfo.Password != "" {
+		registerInfo.Password, err = util.PasswordHash(registerInfo.Password)
+		if err != nil {
+			ctx.JSON(200, Response{
+				Msg:  "密码加密失败",
+				Code: 500,
+			})
+			return
+		}
+		fmt.Println(registerInfo.AccountName)
+		id, err := service.RegisterByAccountName(&registerInfo)
+		if err != nil {
+			ctx.JSON(200, Response{
+				Msg:  "创建账号失败",
+				Code: 500,
+			})
+			return
+		}
+		if err != nil {
+			ctx.JSON(200, Response{
+				Msg:  "查找账号失败",
+				Code: 500,
+			})
+			return
+		}
+		ctx.JSON(200, Response{
+			Msg:  "注册成功",
+			Code: 200,
+			Data: id,
+		})
+	}
+}
 
 func UserDetail(ctx *gin.Context) {
 	// 简单的路由，承接数据并且发送出去
@@ -36,16 +79,18 @@ func LoginByName(c *gin.Context) {
 	bindJson(c, &loginInfo)
 	token, err := service.LoginByNameAndToken(&loginInfo)
 	if err == nil {
-		c.JSON(200, gin.H{
-			"code": 200,
-			"data": gin.H{"token": token},
-			"msg":  "登陆成功",
-		})
+		res := Response{
+			Msg:  "ok",
+			Code: 200,
+			Data: gin.H{"token": token},
+		}
+		c.JSON(200, res)
 	} else {
-		c.JSON(200, gin.H{
-			"code": 500,
-			"msg":  "登陆失败",
-		})
+		res := Response{
+			Msg:  "账号或密码错误",
+			Code: 500,
+		}
+		c.JSON(200, res)
 	}
 }
 

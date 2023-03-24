@@ -1,11 +1,3 @@
-/*
- * @Author: jiangbo jiangbo1996@outlook.com
- * @Date: 2023-02-27 14:11:47
- * @LastEditors: jiangbo jiangbo1996@outlook.com
- * @LastEditTime: 2023-02-27 15:02:42
- * @FilePath: \gin-vue-microBlog\routers\router.go
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
 package routers
 
 import (
@@ -30,6 +22,7 @@ func InitRouter() *gin.Engine {
 	r.Use(func(ctx *gin.Context) {
 
 	})
+	r.POST("/register", api.RegisterAccount)
 
 	r.POST("/login", api.LoginByName)
 
@@ -42,11 +35,12 @@ func InitRouter() *gin.Engine {
 			token := ctx.GetHeader("Token")
 			//校验账号信息
 			AccountName, err := util.VarifyToken(token)
+			res := api.Response{
+				Msg:  "登录失效",
+				Code: 501,
+			}
 			if err != nil {
-				ctx.JSON(200, gin.H{
-					"code": 501,
-					"msg":  "登录失效",
-				})
+				ctx.JSON(200, res)
 
 				ctx.Abort()
 				return
@@ -56,7 +50,7 @@ func InitRouter() *gin.Engine {
 				ctx.Next()
 			}
 		})
-		user.POST("/info", api.UserDetail)
+		user.GET("/info", api.UserDetail)
 	}
 
 	return r

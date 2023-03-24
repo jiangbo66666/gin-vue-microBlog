@@ -1,6 +1,15 @@
 package dto
 
-import "time"
+import (
+	"time"
+)
+
+type Register struct {
+	AccountName string `json:"accountName"`
+	Email       string `json:"email"`
+	PhoneNumber string `json:"phoneNumber"`
+	Password    string `json:"password"`
+}
 
 // 来自前端参数结构
 type Account struct {
@@ -8,7 +17,7 @@ type Account struct {
 	Name        string `json:"name"`
 	PhoneNumber string `json:"phone"`
 	AccountName string `json:"accountName"`
-	PassWord    string `json:"passWord"`
+	Password    string `json:"Password"`
 }
 
 // 返回给前端的数据

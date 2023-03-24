@@ -4,18 +4,28 @@ import (
 	"gorm.io/gorm"
 )
 
-// 负责映射到前端的数据结构，需要与数据库数据分离
-// 属性名保持与数据库表创建的结构体相同
+func CreateAccount(acc *AccountInfo) (uint, error) {
+	user := acc.User
+	err := DB.Create(&user).Error
+	if err != nil {
+		return 0, err
+	}
+	acc.UserId = user.ID
+	err = DB.Create(&acc).Error
+	if err != nil {
+		return 0, err
+	}
+	return acc.ID, nil
+}
 
-func AccountInfoById(id int) (AccountInfo, error) {
+func AccountInfoById(id uint) (AccountInfo, error) {
 	curUser := AccountInfo{}
 	// sql语句取值且放入curUser结构体
-	err := DB.Where("id = ?", id).Where("status = ?", 0).First(&AccountInfo{}).Error
+	err := DB.Where("id = ?", id).Where("status = ?", 0).First(&curUser).Error
 	if err != nil {
 		return curUser, err
 	}
 	// scan将数据库查询出来的数据扫描到与前端交互的结构体中
-	err = DB.Model(&AccountInfo{}).Scan(&curUser).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
 		return curUser, err
 	}
