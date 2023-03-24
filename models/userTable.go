@@ -39,6 +39,6 @@ type AccountInfo struct {
 	CreateAt    time.Time `gorm:"default:(NOW());comment:'创建账号时间'"`
 	UpdateAt    time.Time `gorm:"comment:更新时间;default:(NOW())"`
 	RecentLogin time.Time `gorm:"comment:最近登录时间;default:(NOW())"`
-	Status      int       `gorm:"default:0;comment:'用户账号状态'"`
+	Status      int       `gorm:"default:1;comment:'用户账号状态'"`
 	User        UserInfo  `gorm:"foreignKey:UserId"` //外键关联userInfo表
 }
