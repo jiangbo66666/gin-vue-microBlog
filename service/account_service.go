@@ -5,6 +5,7 @@ import (
 	"gin-vue-microBlog/models"
 	"gin-vue-microBlog/service/dto"
 	"gin-vue-microBlog/util"
+	"time"
 )
 
 // 注册账号
@@ -63,6 +64,11 @@ func LoginByNameAndToken(login *dto.Account) (string, error) {
 		return "", err
 	}
 	if util.PasswordVerify(login.Password, userInfo.Password) {
+		userInfo.RecentLogin = time.Now()
+		// 根据账号更新指定的内容
+		_ = models.UpdateAccountInfo(&userInfo, map[string]interface{}{
+			"RecentLogin": time.Now(),
+		})
 		return token, nil
 	} else {
 		return "", errors.New("密码错误")

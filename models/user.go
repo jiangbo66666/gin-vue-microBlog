@@ -1,6 +1,8 @@
 package models
 
 import (
+	"errors"
+
 	"gorm.io/gorm"
 )
 
@@ -52,4 +54,12 @@ func AccountInfoByPhone(phoneNumber string) (AccountInfo, error) {
 		return curUser, err
 	}
 	return curUser, err
+}
+
+func UpdateAccountInfo(acc *AccountInfo, a map[string]interface{}) error {
+	err := DB.Model(acc).Where("status = ?", 0).Updates(a).Error
+	if err != nil {
+		return errors.New("更新失败")
+	}
+	return nil
 }
