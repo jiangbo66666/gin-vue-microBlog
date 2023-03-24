@@ -37,7 +37,7 @@ func AccountInfoById(id uint) (AccountInfo, error) {
 func AccountInfoByName(name string) (AccountInfo, error) {
 	curUser := AccountInfo{}
 	// sql语句取值且放入curUser结构体 ,并且筛选掉停用的账号
-	err := DB.Debug().Model(&AccountInfo{}).Scopes(ActiveAccount).Where("account_name = ?", name).Scan(&curUser).Error
+	err := DB.Model(&AccountInfo{}).Scopes(ActiveAccount).Where("account_name = ?", name).Scan(&curUser).Error
 	// scan将数据库查询出来的数据扫描到与前端交互的结构体中
 	if err != nil && err != gorm.ErrRecordNotFound {
 		return curUser, err
