@@ -51,6 +51,7 @@ func InitRouter() *gin.Engine {
 			}
 		})
 		user.GET("/info", api.UserDetail)
+		user.POST("/BindNumber", api.BindPhoneNumber)
 	}
 
 	return r

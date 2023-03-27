@@ -8,6 +8,7 @@ import (
 
 func CreateAccount(acc *AccountInfo) (uint, error) {
 	user := acc.User
+	// 先创建空用户信息表
 	err := DB.Create(&user).Error
 	if err != nil {
 		return 0, err
@@ -48,9 +49,11 @@ func AccountInfoByName(name string) (AccountInfo, error) {
 func AccountInfoByPhone(phoneNumber string) (AccountInfo, error) {
 	curUser := AccountInfo{}
 	// sql语句取值且放入curUser结构体,并且筛选掉停用的账号
-	err := DB.Model(&AccountInfo{}).Where("phone_number = ?", phoneNumber).Scopes(ActiveAccount).Scan(&curUser).Error
+	// find方法和scan方法一样，是把数据扫描直接扫描到对应的数据中的
+	err := DB.Model(&AccountInfo{}).Debug().Where("phone_number = ?", phoneNumber).Scopes(ActiveAccount).First(&curUser).Error
 	// scan将数据库查询出来的数据扫描到与前端交互的结构体中
-	if err != nil && err != gorm.ErrRecordNotFound {
+	// gorm.ErrRecordNotFound表示没有接收到数据
+	if err != nil {
 		return curUser, err
 	}
 	return curUser, err

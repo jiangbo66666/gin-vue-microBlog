@@ -16,7 +16,7 @@ func RegisterAccount(ctx *gin.Context) {
 	err := bindJson(ctx, &registerInfo)
 	if err != nil {
 		ctx.JSON(200, Response{
-			Msg:  "信息不完整",
+			Msg:  err.Error(),
 			Code: 500,
 		})
 		return
@@ -25,7 +25,7 @@ func RegisterAccount(ctx *gin.Context) {
 		registerInfo.Password, err = util.PasswordHash(registerInfo.Password)
 		if err != nil {
 			ctx.JSON(200, Response{
-				Msg:  "密码加密失败",
+				Msg:  err.Error(),
 				Code: 500,
 			})
 			return
@@ -33,14 +33,7 @@ func RegisterAccount(ctx *gin.Context) {
 		id, err := service.RegisterByAccountName(&registerInfo)
 		if err != nil {
 			ctx.JSON(200, Response{
-				Msg:  "创建账号失败",
-				Code: 500,
-			})
-			return
-		}
-		if err != nil {
-			ctx.JSON(200, Response{
-				Msg:  "查找账号失败",
+				Msg:  err.Error(),
 				Code: 500,
 			})
 			return
@@ -62,7 +55,7 @@ func UserDetail(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(200, gin.H{
 			"code": 500,
-			"msg":  "消息获取错误",
+			"msg":  err.Error(),
 			"data": data,
 		})
 	} else {
@@ -88,11 +81,32 @@ func LoginByName(c *gin.Context) {
 		c.JSON(200, res)
 	} else {
 		res := Response{
-			Msg:  "账号或密码错误",
+			Msg:  err.Error(),
 			Code: 500,
 		}
 		c.JSON(200, res)
 	}
+}
+
+// 绑定手机号码
+func BindPhoneNumber(c *gin.Context) {
+	var accPhone dto.AccountPhone
+	AccountName := c.MustGet("AccountName").(string)
+	bindJson(c, &accPhone)
+	err := service.BindPhone(AccountName, accPhone.PhoneNumber)
+	if err != nil {
+		res := Response{
+			Msg:  err.Error(),
+			Code: 500,
+		}
+		c.JSON(200, res)
+		return
+	}
+	res := Response{
+		Msg:  "ok",
+		Code: 200,
+	}
+	c.JSON(200, res)
 }
 
 // 响应数据合并到结构体

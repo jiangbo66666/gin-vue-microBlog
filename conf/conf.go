@@ -5,18 +5,18 @@ package conf
 // userName: root
 // passWord: imm62611
 // timeOut: 1000
-// 读取ymal要映射到最外层，最外层也要在项目下面
+// 读取yaml要映射到最外层，最外层也要在项目下面
 type Config struct {
-	DataBase DataBase `ymal:"dataBase"`
+	DataBase DataBase `yaml:"dataBase"`
 }
 
 type DataBase struct {
-	Host     string `ymal:"host"`
-	Port     string `ymal:"port"`
-	UserName string `ymal:"userName"`
-	PassWord string `ymal:"passWord"`
-	User     string `ymal:"user"`
-	TimeOut  int    `ymal:"timeOut"`
+	Host     string `yaml:"host"`
+	Port     string `yaml:"port"`
+	UserName string `yaml:"userName"`
+	PassWord string `yaml:"passWord"`
+	User     string `yaml:"user"`
+	TimeOut  int    `yaml:"timeOut"`
 	MaxConn  int
 	MaxOpen  int
 }
