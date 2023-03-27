@@ -50,7 +50,9 @@ func InitRouter() *gin.Engine {
 				ctx.Next()
 			}
 		})
+		// 用户详情
 		user.GET("/info", api.UserDetail)
+		// 绑定手机号码
 		user.POST("/BindNumber", api.BindPhoneNumber)
 	}
 
