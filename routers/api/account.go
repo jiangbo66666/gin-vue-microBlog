@@ -46,7 +46,7 @@ func RegisterAccount(ctx *gin.Context) {
 	}
 }
 
-func UserDetail(ctx *gin.Context) {
+func AccountDetail(ctx *gin.Context) {
 	// 简单的路由，承接数据并且发送出去
 	var userInfo dto.Account
 	userInfo.AccountName = ctx.MustGet("AccountName").(string)

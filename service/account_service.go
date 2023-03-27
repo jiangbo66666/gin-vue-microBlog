@@ -100,5 +100,4 @@ func BindPhone(accountName string, phoneNumber string) error {
 	} else {
 		return errors.New("该手机号已被其他账号绑定")
 	}
-
 }

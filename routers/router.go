@@ -9,8 +9,11 @@ import (
 
 // 返回gin的路由类型
 func InitRouter() *gin.Engine {
+
 	// 初始化路由
 	r := gin.New()
+	// 设置信任的代理
+	// r.SetTrustedProxies([]string{"203.0.113.1"})
 	// log日志
 	r.Use(gin.Logger())
 	//
@@ -51,7 +54,7 @@ func InitRouter() *gin.Engine {
 			}
 		})
 		// 用户详情
-		user.GET("/info", api.UserDetail)
+		user.GET("/info", api.AccountDetail)
 		// 绑定手机号码
 		user.POST("/BindNumber", api.BindPhoneNumber)
 	}

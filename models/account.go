@@ -6,6 +6,7 @@ import (
 	"gorm.io/gorm"
 )
 
+// 创建用户
 func CreateAccount(acc *AccountInfo) (uint, error) {
 	user := acc.User
 	// 先创建空用户信息表
@@ -21,6 +22,7 @@ func CreateAccount(acc *AccountInfo) (uint, error) {
 	return acc.ID, nil
 }
 
+// 根据用户id查询账号信息
 func AccountInfoById(id uint) (AccountInfo, error) {
 	curUser := AccountInfo{}
 	// sql语句取值且放入curUser结构体
@@ -35,6 +37,7 @@ func AccountInfoById(id uint) (AccountInfo, error) {
 	return curUser, err
 }
 
+// 根据账号名查询账号信息
 func AccountInfoByName(name string) (AccountInfo, error) {
 	curUser := AccountInfo{}
 	// sql语句取值且放入curUser结构体 ,并且筛选掉停用的账号
@@ -46,6 +49,7 @@ func AccountInfoByName(name string) (AccountInfo, error) {
 	return curUser, err
 }
 
+// 根据手机号查询用户信息
 func AccountInfoByPhone(phoneNumber string) (AccountInfo, error) {
 	curUser := AccountInfo{}
 	// sql语句取值且放入curUser结构体,并且筛选掉停用的账号
@@ -59,6 +63,7 @@ func AccountInfoByPhone(phoneNumber string) (AccountInfo, error) {
 	return curUser, err
 }
 
+// 更新账号信息
 func UpdateAccountInfo(acc *AccountInfo, a map[string]interface{}) error {
 	// Scopes方法可入参ScopeFunc函数用于指定统一内容
 	err := DB.Model(acc).Scopes(ActiveAccount).Updates(a).Error
