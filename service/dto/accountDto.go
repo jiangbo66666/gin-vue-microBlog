@@ -1,6 +1,7 @@
 package dto
 
 import (
+	"gin-vue-microBlog/models"
 	"time"
 )
 
@@ -22,10 +23,14 @@ type Account struct {
 }
 
 // 查询用户详情返回的信息
-type UserDetails struct {
+type AccountDetails struct {
 	AccountName string    `json:"accountName"`
 	PhoneNumber string    `json:"phoneNumber"`
 	RecentLogin time.Time `json:"recentLogin"`
+	UserDetails models.UserInfo
+}
+
+type UserDetails struct {
 }
 
 type AccountPhone struct {

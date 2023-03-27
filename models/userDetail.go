@@ -1,1 +1,5 @@
 package models
+
+func GetUserInfoByName() {
+
+}

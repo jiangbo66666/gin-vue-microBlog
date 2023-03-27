@@ -41,10 +41,11 @@ func GetAccountInfoById(id uint) (interface{}, error) {
 func GetUserDetails(user *dto.Account) (interface{}, error) {
 	// 数据处理层，拿到sql的数据进行处理
 	userDetail, err := models.AccountInfoByName(user.AccountName)
-	data := dto.UserDetails{
+	data := dto.AccountDetails{
 		AccountName: userDetail.AccountName,
 		PhoneNumber: userDetail.PhoneNumber,
 		RecentLogin: userDetail.RecentLogin,
+		UserDetails: userDetail.User,
 	}
 	return data, err
 }

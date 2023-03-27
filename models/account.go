@@ -39,9 +39,12 @@ func AccountInfoById(id uint) (AccountInfo, error) {
 
 // 根据账号名查询账号信息
 func AccountInfoByName(name string) (AccountInfo, error) {
-	curUser := AccountInfo{}
+	curUser := AccountInfo{
+		User: UserInfo{},
+	}
 	// sql语句取值且放入curUser结构体 ,并且筛选掉停用的账号
-	err := DB.Model(&AccountInfo{}).Scopes(ActiveAccount).Where("account_name = ?", name).Scan(&curUser).Error
+	// Preload("User")里面的参数应该是结构体所关联的参数，同时不能使用model()指定查询的模型，会导致无法预加载内容
+	err := DB.Debug().Preload("User").Scopes(ActiveAccount).Where("account_name = ?", name).Find(&curUser).Error
 	// scan将数据库查询出来的数据扫描到与前端交互的结构体中
 	if err != nil && err != gorm.ErrRecordNotFound {
 		return curUser, err
